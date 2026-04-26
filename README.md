@@ -1,4 +1,4 @@
-# 🐳 Migrate Image Registry from DockerHub to AWS ECR
+# 🐳 Migrate Image Registry to AWS ECR
 
 ![AWS](https://img.shields.io/badge/AWS-EKS-orange?logo=amazonaws&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-1.29-blue?logo=kubernetes&logoColor=white)
@@ -6,6 +6,21 @@
 ![Jenkins](https://img.shields.io/badge/Jenkins-CI/CD-D24939?logo=jenkins&logoColor=white)
 ![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform&logoColor=white)
 ![Helm](https://img.shields.io/badge/Helm-Charts-0F1689?logo=helm&logoColor=white)
+
+## 🔍 Key Differences: DockerHub vs Amazon ECR vs Nexus
+
+| Feature              | DockerHub                         | Amazon ECR                          | Nexus Repository                         |
+|---------------------|----------------------------------|------------------------------------|------------------------------------------|
+| **Type**            | Public/Private SaaS registry     | Managed AWS container registry     | Self-hosted artifact repository          |
+| **Authentication**  | Username & password              | `aws ecr get-login-password`        | Username/password or LDAP                |
+| **Token Expiry**    | Long-lived                       | 12 hours (auto-refreshed)           | Configurable                             |
+| **K8s Integration** | Requires ImagePullSecret         | Native (same AWS account)           | Requires ImagePullSecret                 |
+| **Hosting**         | Fully managed (Docker)           | Fully managed (AWS)                 | Self-hosted (VM/K8s)                     |
+| **Setup Effort**    | Very low                         | Low (if using AWS)                  | High (install, maintain, scale)          |
+| **Cost Model**      | Free tier + paid plans           | Pay per storage (GB) + requests     | Free (OSS) / Paid (Pro license + infra)  |
+| **Image Cleanup**   | Manual                           | Lifecycle policies (automated)      | Cleanup policies (configurable)          |
+| **Multi-Artifact**  | Containers only                  | Containers only                    | Supports Docker, Maven, npm, etc.        |
+| **Best Use Case**   | Simple/public projects           | AWS-native production workloads     | Enterprise artifact management           |
 
 ## 📌 What You'll Set Up
 
@@ -189,18 +204,6 @@ Expected output:
   ]
 }
 ```
-
----
-
-## 🔍 Key Differences: DockerHub vs ECR
-
-| Feature         | DockerHub                | Amazon ECR                     |
-| --------------- | ------------------------ | ------------------------------ |
-| Authentication  | Username & password      | `aws ecr get-login-password`   |
-| Token Expiry    | Long-lived               | 12 hours (auto-refreshed)      |
-| EKS Integration | Requires ImagePullSecret | Native (same AWS account)      |
-| Cost            | Limited free tier        | Pay per storage (GB)           |
-| Image Cleanup   | Manual                   | Lifecycle policies (automated) |
 
 ---
 
