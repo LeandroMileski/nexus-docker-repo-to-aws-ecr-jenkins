@@ -1,0 +1,22 @@
+global:
+  security:
+    allowInsecureImages: True
+
+image:
+  registry: docker.io
+  tag: latest
+  repository: bitnamilegacy/mysql
+
+auth:
+  rootPassword: "rootpassword123"
+  database: "mydb"
+  username: "myuser"
+  password: "mypassword123"
+
+primary:
+  nodeSelector: {} # deploys on EC2 nodes (not Fargate)
+  persistence:
+    enabled: false
+secondary:
+  persistence:
+    enabled: false

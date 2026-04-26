@@ -1,0 +1,15 @@
+global:
+  security:
+    allowInsecureImages: True
+
+image:
+  registry: docker.io
+  tag: latest
+  repository: bitnamilegacy/phpmyadmin
+
+db:
+  host: mysql.mysql-app.svc.cluster.local
+  port: 3306
+
+service:
+  type: LoadBalancer

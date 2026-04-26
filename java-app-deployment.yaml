@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app
+  namespace: fargate-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java-app
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+        - name: java-app
+          image: <your-dockerhub-or-ecr-image> # e.g. your-user/java-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "mysql.mysql-app.svc.cluster.local"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: "mydb"
+            - name: DB_USER
+              value: "myuser"
+            - name: DB_PASSWORD
+              value: "mypassword123"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
